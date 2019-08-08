@@ -1,0 +1,24 @@
+{
+  "name": "chat-as-slack",
+  "version": "1.0.0",
+  "description": "simple slack chat using react and redux.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corsicanec82/frontend-project-lvl4.git"
+  },
+  "keywords": [
+    "slack",
+    "chat",
+    "react"
+  ],
+  "author": "Stanislav Dzisiak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corsicanec82/frontend-project-lvl4/issues"
+  },
+  "homepage": "https://github.com/corsicanec82/frontend-project-lvl4#readme"
+}
