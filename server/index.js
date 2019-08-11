@@ -11,7 +11,9 @@ import Router from 'koa-router';
 import koaLogger from 'koa-logger';
 import koaWebpack from 'koa-webpack';
 import bodyParser from 'koa-bodyparser';
-import session from 'koa-generic-session';
+// import session from 'koa-generic-session';
+import session from 'koa-session';
+import favicon from 'koa-favicon';
 import _ from 'lodash';
 import addRoutes from './routes';
 
@@ -56,6 +58,7 @@ export default () => {
     ],
   });
   pug.use(app);
+  app.use(favicon(path.join(__dirname, '..', '/assets/favicon.ico')));
 
   const server = http.createServer(app.callback());
   const io = socket(server);

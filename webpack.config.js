@@ -1,3 +1,5 @@
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: [
@@ -26,4 +28,7 @@ module.exports = {
       },
     ],
   },
+  // plugins: [
+  //   new BundleAnalyzerPlugin(),
+  // ],
 };
