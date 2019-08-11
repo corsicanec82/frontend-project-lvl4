@@ -1,11 +1,9 @@
 import React from 'react';
 
 const NewMessageForm = () => (
-  <div className="col-sm-12 py-5 h-25 border-top bg-light">
+  <div className="bg-light p-3 border-top">
     <form>
-      <div className="form-group">
-        <input id="message" className="form-control" type="text" placeholder="Message" />
-      </div>
+      <input id="message" className="form-control" type="text" placeholder="Message" />
     </form>
   </div>
 );

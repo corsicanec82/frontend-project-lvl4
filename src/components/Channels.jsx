@@ -37,8 +37,8 @@ class Channels extends React.Component {
     const { channels } = this.props;
 
     return (
-      <div className="col-sm-2 py-2 border-right bg-dark">
-        <h5 className="text-white">Channels:</h5>
+      <div className="d-flex flex-column col-sm-2 bg-light p-3 border-right">
+        <h5 className="text-dark">Channels:</h5>
         <ul className="list-group">
           {this.renderChannelList(channels)}
         </ul>
