@@ -16,6 +16,9 @@ build:
 test:
 	npm test
 
+test-coverage:
+	npm test -- --coverage
+
 check-types:
 	npx flow
 
@@ -24,5 +27,8 @@ lint:
 
 publish:
 	npm publish
+
+deploy:
+	git push heroku master
 
 .PHONY: test
