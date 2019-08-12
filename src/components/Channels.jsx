@@ -4,6 +4,7 @@ import cn from 'classnames';
 import _isEmpty from 'lodash/isEmpty';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
+import UserData from './UserData';
 
 const mapStateToProps = state => ({
   channels: getSortedChannels(state),
@@ -11,6 +12,8 @@ const mapStateToProps = state => ({
 });
 
 class Channels extends React.Component {
+  static contextType = UserData;
+
   renderChannel = (channel) => {
     const { id, name } = channel;
     const { currentChannelId } = this.props;
@@ -35,9 +38,14 @@ class Channels extends React.Component {
 
   render() {
     const { channels } = this.props;
+    const { userName, avatarUrl } = this.context;
 
     return (
-      <div className="d-flex flex-column col-sm-2 bg-light p-3 border-right">
+      <div className="d-flex flex-column col-md-2 bg-light p-3 border-right">
+        <div className="mb-4">
+          <p className="h5">{userName}</p>
+          <img src={avatarUrl} alt="avatar" className="img-thumbnail" />
+        </div>
         <h5 className="text-dark">Channels:</h5>
         <ul className="list-group">
           {this.renderChannelList(channels)}

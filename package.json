@@ -1,6 +1,6 @@
 {
   "name": "chat-as-slack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simple slack chat using react and redux.",
   "main": "src/index.js",
   "scripts": {

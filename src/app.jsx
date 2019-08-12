@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import reducers from './reducers';
 import App from './components/App';
+import UserData from './components/UserData';
 
 const dataToState = data => (
   data.reduce(({ byId, allIds }, item) => ({
@@ -14,7 +15,7 @@ const dataToState = data => (
   { byId: {}, allIds: [] })
 );
 
-export default (gon) => {
+export default (gon, userData) => {
   const { channels, currentChannelId } = gon;
 
   const initialState = {
@@ -31,7 +32,9 @@ export default (gon) => {
 
   render(
     <Provider store={store}>
-      <App />
+      <UserData.Provider value={userData}>
+        <App />
+      </UserData.Provider>
     </Provider>,
     document.getElementById('chat'),
   );
