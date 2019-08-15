@@ -1,9 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Messages = () => (
-  <div className="p-3 overflow-auto">
-    messages
-  </div>
-);
+const mapStateToProps = () => ({
+});
+
+@connect(mapStateToProps)
+class Messages extends React.Component {
+  render() {
+    return (
+      <>
+        messages
+      </>
+    );
+  }
+}
 
 export default Messages;

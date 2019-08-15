@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   currentChannelId: getCurrentChannelId(state),
 });
 
+@connect(mapStateToProps)
 class Channels extends React.Component {
   static contextType = UserData;
 
@@ -55,4 +56,4 @@ class Channels extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Channels);
+export default Channels;

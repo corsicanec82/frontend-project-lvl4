@@ -1,34 +1,45 @@
+import '@babel/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import io from 'socket.io-client';
 
 import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
-
-const dataToState = data => (
-  data.reduce(({ byId, allIds }, item) => ({
-    byId: { ...byId, [item.id]: item },
-    allIds: [...allIds, item.id],
-  }),
-  { byId: {}, allIds: [] })
-);
+import { testAction } from './actions';
 
 export default (gon, userData) => {
   const { channels, currentChannelId } = gon;
+
+  const dataToState = data => (
+    data.reduce(({ byId, allIds }, item) => ({
+      byId: { ...byId, [item.id]: item },
+      allIds: [...allIds, item.id],
+    }),
+    { byId: {}, allIds: [] })
+  );
 
   const initialState = {
     channels: { ...dataToState(channels), currentChannelId },
   };
 
-  /* eslint-disable no-underscore-dangle */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
   const store = createStore(
     reducers,
     initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    composeEnhancers(
+      applyMiddleware(thunk),
+    ),
   );
-  /* eslint-enable */
+
+  const socket = io();
+  socket.on('newMessage', (data) => {
+    store.dispatch(testAction(data));
+  });
 
   render(
     <Provider store={store}>

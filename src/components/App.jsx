@@ -10,8 +10,12 @@ const App = () => (
       <div className="d-flex flex-row vh-100">
         <Channels />
         <div className="col-md-10 d-flex flex-column-reverse p-0">
-          <NewMessageForm />
-          <Messages />
+          <div className="bg-light p-3 border-top">
+            <NewMessageForm />
+          </div>
+          <div className="p-3 overflow-auto">
+            <Messages />
+          </div>
         </div>
       </div>
     </div>

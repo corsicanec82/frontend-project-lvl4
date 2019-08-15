@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/application.css';
 
 import gon from 'gon';
-// import io from 'socket.io-client';
 
 import app from './app';
 import { getUserData } from './utils';
