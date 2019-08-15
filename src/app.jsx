@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
-import { testAction } from './actions';
+import { addMessage } from './actions';
 
 export default (gon, userData) => {
   const { channels, currentChannelId } = gon;
@@ -38,7 +38,7 @@ export default (gon, userData) => {
 
   const socket = io();
   socket.on('newMessage', (data) => {
-    store.dispatch(testAction(data));
+    store.dispatch(addMessage(data));
   });
 
   render(

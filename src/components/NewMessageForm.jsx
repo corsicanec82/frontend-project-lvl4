@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 import { getCurrentChannelId } from '../selectors';
 import * as actions from '../actions';
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const actionCreators = {
-  addMessage: actions.addMessage,
+  sendMessage: actions.sendMessage,
 };
 
 @reduxForm({
@@ -19,17 +19,15 @@ const actionCreators = {
 @connect(mapStateToProps, actionCreators)
 class NewMessageForm extends React.Component {
   handleAddMessage = async ({ messageText }) => {
-    const { reset, currentChannelId, addMessage } = this.props;
-    try {
-      addMessage({ messageText, currentChannelId });
-      reset();
-    } catch (e) {
-      throw new SubmissionError({ _error: e.message });
-    }
+    const { reset, currentChannelId, sendMessage } = this.props;
+    await sendMessage({ messageText, currentChannelId });
+    reset();
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const {
+      handleSubmit, submitting, pristine, error,
+    } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.handleAddMessage)}>
@@ -41,6 +39,7 @@ class NewMessageForm extends React.Component {
             <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Send</button>
           </div>
         </div>
+        {error && <div>error</div>}
       </form>
     );
   }
