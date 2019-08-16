@@ -25,18 +25,6 @@ class Channels extends React.Component {
     );
   }
 
-  renderChannelList = (channels) => {
-    if (_isEmpty(channels)) {
-      return null;
-    }
-
-    return (
-      <ul className="list-group">
-        {channels.map(this.renderChannel)}
-      </ul>
-    );
-  }
-
   render() {
     const { channels } = this.props;
     const { userName, avatarUrl } = this.context;
@@ -49,7 +37,7 @@ class Channels extends React.Component {
         </div>
         <h5 className="text-dark">Channels:</h5>
         <ul className="list-group">
-          {this.renderChannelList(channels)}
+          {channels.map(this.renderChannel)}
         </ul>
       </div>
     );

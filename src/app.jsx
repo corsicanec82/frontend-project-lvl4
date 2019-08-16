@@ -12,7 +12,7 @@ import UserData from './components/UserData';
 import { addMessage } from './actions';
 
 export default (gon, userData) => {
-  const { channels, currentChannelId } = gon;
+  const { channels, currentChannelId, messages } = gon;
 
   const dataToState = data => (
     data.reduce(({ byId, allIds }, item) => ({
@@ -24,6 +24,7 @@ export default (gon, userData) => {
 
   const initialState = {
     channels: { ...dataToState(channels), currentChannelId },
+    messages: { ...dataToState(messages) },
   };
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

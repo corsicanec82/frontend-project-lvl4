@@ -4,8 +4,11 @@ import * as actions from '../actions';
 
 const messages = handleActions({
   [actions.addMessage](state, { payload: { data: { attributes } } }) {
-    console.log(attributes);
-    return state;
+    const { byId, allIds } = state;
+    return {
+      byId: { ...byId, [attributes.id]: attributes },
+      allIds: [...allIds, attributes.id],
+    };
   },
 }, { byId: {}, allIds: [] });
 
