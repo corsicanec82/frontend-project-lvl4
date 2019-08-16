@@ -7,10 +7,10 @@ import routes from '../routes';
 
 export const addMessage = createAction('MESSAGE_ADD');
 
-export const sendMessage = ({ messageText, currentChannelId }) => async () => {
+export const sendMessage = ({ messageText, currentChannelId, userData }) => async () => {
   try {
     const url = routes.channelMessagesPath(currentChannelId);
-    const data = { attributes: { messageText } };
+    const data = { attributes: { messageText, userData } };
     await axios.post(url, { data });
   } catch (e) {
     throw new SubmissionError({ _error: e.message });

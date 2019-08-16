@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
-import _isEmpty from 'lodash/isEmpty';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
 import UserData from './UserData';
