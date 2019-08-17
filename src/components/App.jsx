@@ -1,21 +1,22 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import Channels from './Channels';
 import Messages from './Messages';
 import NewMessageForm from './NewMessageForm';
 
 const App = () => (
-  <div className="row">
-    <div className="col-md p-0">
-      <div className="d-flex flex-row vh-100">
+  <Container fluid>
+    <Row>
+      <Col md="2" className="overflow-auto vh-100 p-0 border-right bg-light">
         <Channels />
-        <div className="col-md-10 d-flex flex-column-reverse p-0">
-          <NewMessageForm />
-          <Messages />
-        </div>
-      </div>
-    </div>
-  </div>
+      </Col>
+      <Col className="d-flex flex-column-reverse vh-100 p-0">
+        <NewMessageForm />
+        <Messages />
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default App;

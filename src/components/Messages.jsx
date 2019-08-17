@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { ListGroup, Media, Image } from 'react-bootstrap';
 
 import { getMessagesFromChannel } from '../selectors';
 
@@ -44,18 +45,18 @@ class Messages extends React.Component {
     } = message;
 
     return (
-      <li key={id} className="list-group-item">
-        <div className="media">
-          <img src={avatarUrl} className="mr-3 rounded" width="60" alt={userName} />
-          <div className="media-body">
+      <ListGroup.Item as="li" key={id} className="px-0">
+        <Media>
+          <Image src={avatarUrl} rounded className="mr-3" width="60" />
+          <Media.Body>
             <p className="mb-1">
               <span className="mr-2 font-weight-bold">{userName}</span>
               <small>{time}</small>
             </p>
             {text}
-          </div>
-        </div>
-      </li>
+          </Media.Body>
+        </Media>
+      </ListGroup.Item>
     );
   }
 
@@ -64,9 +65,9 @@ class Messages extends React.Component {
 
     return (
       <div className="p-3 overflow-auto" ref={this.messageBox}>
-        <ul className="list-group list-group-flush">
+        <ListGroup as="ul" variant="flush">
           {messages.map(this.renderMessage)}
-        </ul>
+        </ListGroup>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Form, Col, Button } from 'react-bootstrap';
 
 import UserData from './UserData';
 import { getCurrentChannelId } from '../selectors';
@@ -34,19 +35,17 @@ class NewMessageForm extends React.Component {
     } = this.props;
 
     return (
-      <div className="bg-light p-3 border-top">
-        <form onSubmit={handleSubmit(this.handleAddMessage)}>
-          <div className="form-row">
-            <div className="col">
-              <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
-            </div>
-            <div className="col-auto">
-              <button type="submit" disabled={pristine || submitting} className="btn btn-primary">Send</button>
-            </div>
-          </div>
-          {error && <div>error</div>}
-        </form>
-      </div>
+      <Form onSubmit={handleSubmit(this.handleAddMessage)} className="d-flex pl-3 py-3 border-top bg-light">
+        <Form.Row className="w-100">
+          <Col>
+            <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
+          </Col>
+          <Col md="auto">
+            <Button variant="primary" type="submit" disabled={pristine || submitting}>Send</Button>
+          </Col>
+        </Form.Row>
+        {error && <div>error</div>}
+      </Form>
     );
   }
 }

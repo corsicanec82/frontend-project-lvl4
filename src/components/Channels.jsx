@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import cn from 'classnames';
+import { ListGroup, Image } from 'react-bootstrap';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
 import UserData from './UserData';
@@ -17,10 +17,16 @@ class Channels extends React.Component {
   renderChannel = (channel) => {
     const { id, name } = channel;
     const { currentChannelId } = this.props;
-    const channelClass = cn('list-group-item list-group-item-action', { active: id === currentChannelId });
 
     return (
-      <button key={id} type="button" className={channelClass}>{name}</button>
+      <ListGroup.Item
+        action
+        key={id}
+        active={id === currentChannelId}
+        className="rounded-0 border-left-0 border-right-0 py-2"
+      >
+        {name}
+      </ListGroup.Item>
     );
   }
 
@@ -29,16 +35,16 @@ class Channels extends React.Component {
     const { userName, avatarUrl } = this.context;
 
     return (
-      <div className="d-flex flex-column col-md-2 bg-light p-3 border-right">
-        <div className="mb-4">
+      <>
+        <div className="m-3 mb-4">
           <p className="h5">{userName}</p>
-          <img src={avatarUrl} alt="avatar" className="img-thumbnail" />
+          <Image src={avatarUrl} thumbnail width="120" />
         </div>
-        <h5 className="text-dark">Channels:</h5>
-        <ul className="list-group">
+        <p className="h6 ml-3">Channels:</p>
+        <ListGroup>
           {channels.map(this.renderChannel)}
-        </ul>
-      </div>
+        </ListGroup>
+      </>
     );
   }
 }
