@@ -85,6 +85,7 @@ export default (router, io) => {
       const { data: { attributes } } = ctx.request.body;
       const message = {
         ...attributes,
+        time: Date.now(),
         channelId: Number(ctx.params.channelId),
         id: getNextId(),
       };

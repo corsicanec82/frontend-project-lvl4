@@ -36,14 +36,23 @@ class Messages extends React.Component {
   }
 
   renderMessage = (message) => {
-    const { id, messageText, userData: { userName, avatarUrl } } = message;
+    const {
+      id,
+      text,
+      time,
+      userData: { userName, avatarUrl },
+    } = message;
+
     return (
       <li key={id} className="list-group-item">
         <div className="media">
-          <img src={avatarUrl} className="mr-3" alt={userName} />
+          <img src={avatarUrl} className="mr-3 rounded" width="60" alt={userName} />
           <div className="media-body">
-            <h5 className="mt-0">{userName}</h5>
-            {messageText}
+            <p className="mb-1">
+              <span className="mr-2 font-weight-bold">{userName}</span>
+              <small>{time}</small>
+            </p>
+            {text}
           </div>
         </div>
       </li>

@@ -21,3 +21,11 @@ export const getUserData = () => {
   Cookies.set('userData', userData, { expires: 1 });
   return JSON.parse(userData);
 };
+
+export const getStateFromData = data => (
+  data.reduce(({ byId, allIds }, item) => ({
+    byId: { ...byId, [item.id]: item },
+    allIds: [...allIds, item.id],
+  }),
+  { byId: {}, allIds: [] })
+);

@@ -9,22 +9,15 @@ import io from 'socket.io-client';
 import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
+import { getUserData, getStateFromData } from './utils';
 import { addMessage } from './actions';
 
-export default (gon, userData) => {
+export default (gon) => {
   const { channels, currentChannelId, messages } = gon;
 
-  const dataToState = data => (
-    data.reduce(({ byId, allIds }, item) => ({
-      byId: { ...byId, [item.id]: item },
-      allIds: [...allIds, item.id],
-    }),
-    { byId: {}, allIds: [] })
-  );
-
   const initialState = {
-    channels: { ...dataToState(channels), currentChannelId },
-    messages: { ...dataToState(messages) },
+    channels: { ...getStateFromData(channels), currentChannelId },
+    messages: getStateFromData(messages),
   };
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -44,7 +37,7 @@ export default (gon, userData) => {
 
   render(
     <Provider store={store}>
-      <UserData.Provider value={userData}>
+      <UserData.Provider value={getUserData()}>
         <App />
       </UserData.Provider>
     </Provider>,
