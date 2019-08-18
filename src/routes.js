@@ -5,4 +5,5 @@ export default {
   channelsPath: () => [host, prefix, 'channels'].join('/'),
   channelPath: id => [host, prefix, 'channel', id].join('/'),
   channelMessagesPath: id => [host, prefix, 'channels', id, 'messages'].join('/'),
+  userDataPath: () => [host, prefix, 'userdata'].join('/'),
 };

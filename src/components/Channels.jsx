@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ListGroup, Image } from 'react-bootstrap';
+import {
+  Button, Image, Nav, Row, Col,
+} from 'react-bootstrap';
+import Octicon, { Pencil, Archive } from '@primer/octicons-react';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
 import UserData from './UserData';
@@ -15,18 +18,36 @@ class Channels extends React.Component {
   static contextType = UserData;
 
   renderChannel = (channel) => {
-    const { id, name } = channel;
+    const { id, name, removable } = channel;
     const { currentChannelId } = this.props;
 
+    const renderControlButtons = () => {
+      if (!removable) {
+        return null;
+      }
+      return (
+        <>
+          <Button variant="primary" className="badge shadow-none p-1">
+            <Octicon icon={Pencil} />
+          </Button>
+          <Button variant="primary" className="badge shadow-none p-1 ml-1">
+            <Octicon icon={Archive} />
+          </Button>
+        </>
+      );
+    };
+
     return (
-      <ListGroup.Item
-        action
-        key={id}
-        active={id === currentChannelId}
-        className="rounded-0 border-left-0 border-right-0 py-2"
-      >
-        {name}
-      </ListGroup.Item>
+      <Nav.Item key={id} className="px-2 py-1">
+        <Row>
+          <Col>
+            <Nav.Link href={`#${name}`} className="p-0" disabled={id === currentChannelId}>{`# ${name}`}</Nav.Link>
+          </Col>
+          <Col md="auto">
+            {renderControlButtons()}
+          </Col>
+        </Row>
+      </Nav.Item>
     );
   }
 
@@ -37,13 +58,19 @@ class Channels extends React.Component {
     return (
       <>
         <div className="m-3 mb-4">
-          <p className="h5">{userName}</p>
+          <p className="h6">{userName}</p>
           <Image src={avatarUrl} thumbnail width="120" />
         </div>
-        <p className="h6 ml-3">Channels:</p>
-        <ListGroup>
+        <p className="h6 ml-2"><strong>Channels</strong></p>
+        <Nav className="flex-column">
           {channels.map(this.renderChannel)}
-        </ListGroup>
+        </Nav>
+        <Button
+          variant="light"
+          className="border-0 rounded-0 w-100 text-left px-2 py-1 mt-2 shadow-none"
+        >
+          + Add channel
+        </Button>
       </>
     );
   }

@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 import * as actions from '../actions';
 
 const messages = handleActions({
-  [actions.addMessage](state, { payload: { data: { attributes } } }) {
+  [actions.addMessageSuccess](state, { payload: { data: { attributes } } }) {
     const { byId, allIds } = state;
     return {
       byId: { ...byId, [attributes.id]: attributes },

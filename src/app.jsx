@@ -10,9 +10,9 @@ import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
 import { getUserData, getStateFromData } from './utils';
-import { addMessage } from './actions';
+import { addMessageSuccess, addChannelSuccess } from './actions';
 
-export default (gon) => {
+export default async (gon) => {
   const { channels, currentChannelId, messages } = gon;
 
   const initialState = {
@@ -32,12 +32,15 @@ export default (gon) => {
 
   const socket = io();
   socket.on('newMessage', (data) => {
-    store.dispatch(addMessage(data));
+    store.dispatch(addMessageSuccess(data));
+  });
+  socket.on('newChannel', (data) => {
+    store.dispatch(addChannelSuccess(data));
   });
 
   render(
     <Provider store={store}>
-      <UserData.Provider value={getUserData()}>
+      <UserData.Provider value={await getUserData()}>
         <App />
       </UserData.Provider>
     </Provider>,

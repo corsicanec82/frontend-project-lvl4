@@ -8,3 +8,9 @@ export const getSortedChannels = createSelector(
 );
 
 export const getCurrentChannelId = state => state.channels.currentChannelId;
+
+export const getCurrentChannel = createSelector(
+  getCurrentChannelId,
+  getChannels,
+  (currentChannelId, channels) => channels.byId[currentChannelId],
+);

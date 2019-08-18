@@ -64,7 +64,7 @@ class Messages extends React.Component {
     const { messages } = this.props;
 
     return (
-      <div className="p-3 overflow-auto" ref={this.messageBox}>
+      <div className="p-3 overflow-auto d-flex flex-column-reverse h-100 border-top border-bottom" ref={this.messageBox}>
         <ListGroup as="ul" variant="flush">
           {messages.map(this.renderMessage)}
         </ListGroup>

@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const actionCreators = {
-  sendMessage: actions.sendMessage,
+  addMessage: actions.addMessage,
 };
 
 @reduxForm({
@@ -23,9 +23,9 @@ class NewMessageForm extends React.Component {
   static contextType = UserData;
 
   handleAddMessage = async ({ messageText }) => {
-    const { reset, currentChannelId, sendMessage } = this.props;
+    const { reset, currentChannelId, addMessage } = this.props;
     const userData = this.context;
-    await sendMessage({ messageText, currentChannelId, userData });
+    await addMessage({ messageText, currentChannelId, userData });
     reset();
   }
 
@@ -35,7 +35,7 @@ class NewMessageForm extends React.Component {
     } = this.props;
 
     return (
-      <Form onSubmit={handleSubmit(this.handleAddMessage)} className="d-flex pl-3 py-3 border-top bg-light">
+      <Form onSubmit={handleSubmit(this.handleAddMessage)} className="d-flex pl-3 py-3 bg-light">
         <Form.Row className="w-100">
           <Col>
             <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
