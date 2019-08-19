@@ -15,3 +15,5 @@ export const addChannel = ({ name, currentChannelId }) => async () => {
     throw new SubmissionError({ _error: e.message });
   }
 };
+
+export const invertAddChannelModalDisplay = createAction('INVERT_ADD_CHANNEL_MODAL_DISPLAY');
