@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import Router from 'koa-router';
-import faker from 'faker';
 
 const getNextId = () => Number(_.uniqueId());
 
@@ -101,18 +100,6 @@ export default (router, io) => {
       };
       ctx.body = data;
       io.emit('newMessage', data);
-    })
-    .post('/userdata', (ctx) => {
-      const { data: { attributes: { language } } } = ctx.request.body;
-      faker.locale = language;
-      ctx.status = 201;
-      const data = {
-        data: {
-          userName: faker.internet.userName(),
-          avatarUrl: faker.internet.avatar(),
-        },
-      };
-      ctx.body = data;
     });
 
   return router

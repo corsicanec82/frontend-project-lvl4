@@ -12,7 +12,7 @@ import UserData from './components/UserData';
 import { getUserData, getStateFromData } from './utils';
 import { addMessageSuccess, addChannelSuccess } from './actions';
 
-export default async (gon) => {
+export default (gon) => {
   const { channels, currentChannelId, messages } = gon;
 
   const initialState = {
@@ -40,7 +40,7 @@ export default async (gon) => {
 
   render(
     <Provider store={store}>
-      <UserData.Provider value={await getUserData()}>
+      <UserData.Provider value={getUserData()}>
         <App />
       </UserData.Provider>
     </Provider>,
