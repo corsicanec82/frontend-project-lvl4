@@ -6,14 +6,15 @@ import routes from '../routes';
 
 export const addChannelSuccess = createAction('CHANNEL_ADD');
 
-export const addChannel = ({ name, currentChannelId }) => async () => {
+export const addChannel = ({ channelName }) => async () => {
   try {
-    const url = routes.channelPath(currentChannelId);
-    const data = { attributes: { name } };
+    const url = routes.channelsPath();
+    const data = { attributes: { name: channelName } };
     await axios.post(url, { data });
   } catch (e) {
     throw new SubmissionError({ _error: e.message });
   }
 };
 
-export const invertAddChannelModalDisplay = createAction('INVERT_ADD_CHANNEL_MODAL_DISPLAY');
+export const showChannelDialog = createAction('CHANNEL_DIALOG_SHOW');
+export const hideChannelDialog = createAction('CHANNEL_DIALOG_HIDE');

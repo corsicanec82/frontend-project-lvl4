@@ -35,17 +35,19 @@ class NewMessageForm extends React.Component {
     } = this.props;
 
     return (
-      <Form onSubmit={handleSubmit(this.handleAddMessage)} className="d-flex pl-3 py-3 bg-light">
-        <Form.Row className="w-100">
-          <Col>
-            <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
-          </Col>
-          <Col md="auto">
-            <Button variant="primary" type="submit" disabled={pristine || submitting}>Send</Button>
-          </Col>
-        </Form.Row>
-        {error && <div>error</div>}
-      </Form>
+      <div className="bg-light pl-3 py-3">
+        {error && <div className="mb-3 pr-2 text-danger">{error}</div>}
+        <Form onSubmit={handleSubmit(this.handleAddMessage)}>
+          <Form.Row className="w-100">
+            <Col>
+              <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
+            </Col>
+            <Col md="auto">
+              <Button variant="primary" type="submit" disabled={pristine || submitting}>Send</Button>
+            </Col>
+          </Form.Row>
+        </Form>
+      </div>
     );
   }
 }
