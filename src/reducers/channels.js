@@ -11,6 +11,15 @@ export const channels = handleActions({
       currentChannelId,
     };
   },
+  // *****
+  [actions.editChannelSuccess](state, { payload: { data: { attributes } } }) {
+    const { byId, allIds, currentChannelId } = state;
+    return {
+      byId: { ...byId, [attributes.id]: attributes },
+      allIds: [...allIds, attributes.id],
+      currentChannelId,
+    };
+  },
 }, { byId: {}, allIds: [], currentChannelId: null });
 
 export const channelsUIState = handleActions({

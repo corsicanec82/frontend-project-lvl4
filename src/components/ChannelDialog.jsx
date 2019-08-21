@@ -1,21 +1,44 @@
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+
+import * as actions from '../actions';
+
+const mapStateToProps = (state) => {
+  const { channelDialog } = state.channelsUIState;
+  return { channelDialog };
+};
+
+const actionCreators = {
+  hideChannelDialog: actions.hideChannelDialog,
+  addChannel: actions.addChannel,
+  editChannel: actions.editChannel,
+};
 
 @reduxForm({
   form: 'channelForm',
 })
+@connect(mapStateToProps, actionCreators)
 class ChannelDialog extends React.Component {
   mapVariantToData = {
     add: {
       title: 'Add Channel',
       body: <Field name="channelName" component="input" type="text" className="form-control" placeholder="Enter channel name" required />,
       titleSubmitButton: 'Add',
+      handleSubmit: async ({ channelName }) => {
+        const { addChannel } = this.props;
+        await addChannel({ channelName });
+      },
     },
     edit: {
       title: 'Edit Channel',
       body: <Field name="channelName" component="input" type="text" className="form-control" placeholder="Enter channel name" required />,
       titleSubmitButton: 'Edit',
+      handleSubmit: async ({ channelName }) => {
+        const { editChannel, channelDialog: { channelId } } = this.props;
+        await editChannel({ channelName, channelId });
+      },
     },
     remove: {
       title: 'Remove Channel',
@@ -24,21 +47,21 @@ class ChannelDialog extends React.Component {
     },
   }
 
-  handleHide = () => {
-    const { onHide, reset } = this.props;
-    onHide();
+  handleHideChannelDialog = () => {
+    const { hideChannelDialog, reset } = this.props;
+    hideChannelDialog();
     reset();
   }
 
-  handleSubmit = async () => {
-    const { onSubmit, reset } = this.props;
-    await onSubmit();
+  handleSubmitAddChannel = async ({ channelName }) => {
+    const { addChannel, reset } = this.props;
+    await addChannel({ channelName });
     reset();
   }
 
   render() {
     const {
-      variant, show, submitting, error,
+      submitting, error, handleSubmit, channelDialog: { variant, show },
     } = this.props;
     if (!variant) {
       return null;
@@ -46,16 +69,18 @@ class ChannelDialog extends React.Component {
     const data = this.mapVariantToData[variant];
 
     return (
-      <Modal centered show={show} onHide={this.handleHide}>
-        <Form onSubmit={this.handleSubmit}>
+      <Modal centered show={show} onHide={this.handleHideChannelDialog}>
+        <Form onSubmit={handleSubmit(this.handleSubmitAddChannel)}>
           <Modal.Header closeButton>
             <Modal.Title>{data.title}</Modal.Title>
           </Modal.Header>
-          {error && <div>error</div>}
-          <Modal.Body>{data.body}</Modal.Body>
+          <Modal.Body>
+            {error && <div className="mb-3 text-danger">{error}</div>}
+            {data.body}
+          </Modal.Body>
           <Modal.Footer>
             <Button type="submit" disabled={submitting}>{data.titleSubmitButton}</Button>
-            <Button variant="secondary" onClick={this.handleHide}>Close</Button>
+            <Button variant="secondary" onClick={this.handleHideChannelDialog}>Close</Button>
           </Modal.Footer>
         </Form>
       </Modal>

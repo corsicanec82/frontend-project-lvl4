@@ -1,76 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Image, Nav, Col, Row, Modal, Form,
+  Button, Image, Nav, Col, Row,
 } from 'react-bootstrap';
 import Octicon, { Pencil, X } from '@primer/octicons-react';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
 import UserData from './UserData';
 import * as actions from '../actions';
+import ChannelDialog from './ChannelDialog';
 
-const mapStateToProps = (state) => {
-  const { channelDialog } = state.channelsUIState;
-  return {
-    channels: getSortedChannels(state),
-    currentChannelId: getCurrentChannelId(state),
-    channelDialog,
-  };
-};
+const mapStateToProps = state => ({
+  channels: getSortedChannels(state),
+  currentChannelId: getCurrentChannelId(state),
+});
 
 const actionCreators = {
   showChannelDialog: actions.showChannelDialog,
-  hideChannelDialog: actions.hideChannelDialog,
-  addChannel: actions.addChannel,
 };
 
-@reduxForm({
-  form: 'channelForm',
-})
 @connect(mapStateToProps, actionCreators)
 class Channels extends React.Component {
   static contextType = UserData;
 
-  handleShowChannelDialog = variant => () => {
+  handleShowChannelDialog = (variant, channelId) => () => {
     const { showChannelDialog } = this.props;
-    showChannelDialog({ variant });
-  }
-
-  handleHideChannelDialog = () => {
-    const { hideChannelDialog, reset } = this.props;
-    hideChannelDialog();
-    reset();
-  }
-
-  handleSubmitAddChannel = async ({ channelName }) => {
-    const { addChannel, reset } = this.props;
-    await addChannel({ channelName });
-    reset();
-  }
-
-  renderModalAddChannel = () => {
-    const {
-      handleSubmit, submitting, error, channelDialog: { show },
-    } = this.props;
-
-    return (
-      <Modal centered show={show} onHide={this.handleHideChannelDialog}>
-        <Form onSubmit={handleSubmit(this.handleSubmitAddChannel)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Channel</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {error && <div className="mb-3 text-danger">{error}</div>}
-            <Field name="channelName" component="input" type="text" className="form-control" placeholder="Enter channel name" required />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="submit" disabled={submitting}>Add</Button>
-            <Button variant="secondary" onClick={this.handleHideChannelDialog}>Close</Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-    );
+    showChannelDialog({ variant, channelId });
   }
 
   renderChannel = (channel) => {
@@ -85,7 +40,7 @@ class Channels extends React.Component {
           </Col>
           {removable && (
             <Col md="auto" className="p-0">
-              <Button variant="primary" className="badge shadow-none ml-2">
+              <Button variant="primary" className="badge shadow-none ml-2" onClick={this.handleShowChannelDialog('edit', id)}>
                 <Octicon icon={Pencil} />
               </Button>
               <Button variant="primary" className="badge shadow-none ml-1">
@@ -99,13 +54,12 @@ class Channels extends React.Component {
   }
 
   render() {
-    console.log('render');
     const { channels } = this.props;
     const { userName, avatarUrl } = this.context;
 
     return (
       <>
-        {this.renderModalAddChannel()}
+        <ChannelDialog />
         <div className="m-3 mb-4">
           <p className="h6">{userName}</p>
           <Image src={avatarUrl} thumbnail width="120" />

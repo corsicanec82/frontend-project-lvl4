@@ -16,5 +16,17 @@ export const addChannel = ({ channelName }) => async () => {
   }
 };
 
+export const editChannelSuccess = createAction('CHANNEL_EDIT');
+
+export const editChannel = ({ channelName, channelId }) => async () => {
+  try {
+    const url = routes.channelPath(channelId);
+    const data = { attributes: { name: channelName } };
+    await axios.patch(url, { data });
+  } catch (e) {
+    throw new SubmissionError({ _error: e.message });
+  }
+};
+
 export const showChannelDialog = createAction('CHANNEL_DIALOG_SHOW');
 export const hideChannelDialog = createAction('CHANNEL_DIALOG_HIDE');

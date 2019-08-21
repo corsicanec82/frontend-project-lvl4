@@ -10,7 +10,7 @@ import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
 import { getUserData, getStateFromData } from './utils';
-import { addMessageSuccess, addChannelSuccess } from './actions';
+import { addMessageSuccess, addChannelSuccess, editChannelSuccess } from './actions';
 
 export default (gon) => {
   const { channels, currentChannelId, messages } = gon;
@@ -36,6 +36,9 @@ export default (gon) => {
   });
   socket.on('newChannel', (data) => {
     store.dispatch(addChannelSuccess(data));
+  });
+  socket.on('renameChannel', (data) => {
+    store.dispatch(editChannelSuccess(data));
   });
 
   render(
