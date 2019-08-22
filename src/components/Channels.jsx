@@ -23,9 +23,9 @@ const actionCreators = {
 class Channels extends React.Component {
   static contextType = UserData;
 
-  handleShowChannelDialog = (variant, channelId) => () => {
+  handleShowChannelDialog = (variant, channel) => () => {
     const { showChannelDialog } = this.props;
-    showChannelDialog({ variant, channelId });
+    showChannelDialog({ variant, channel });
   }
 
   renderChannel = (channel) => {
@@ -40,10 +40,10 @@ class Channels extends React.Component {
           </Col>
           {removable && (
             <Col md="auto" className="p-0">
-              <Button variant="primary" className="badge shadow-none ml-2" onClick={this.handleShowChannelDialog('edit', id)}>
+              <Button variant="primary" className="badge shadow-none ml-2" onClick={this.handleShowChannelDialog('edit', channel)}>
                 <Octicon icon={Pencil} />
               </Button>
-              <Button variant="primary" className="badge shadow-none ml-1">
+              <Button variant="primary" className="badge shadow-none ml-1" onClick={this.handleShowChannelDialog('remove', channel)}>
                 <Octicon icon={X} />
               </Button>
             </Col>

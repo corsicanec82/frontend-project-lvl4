@@ -7,19 +7,21 @@ import * as actions from '../actions';
 
 const mapStateToProps = (state) => {
   const { channelDialog } = state.channelsUIState;
-  return { channelDialog };
+  return channelDialog;
 };
 
 const actionCreators = {
   hideChannelDialog: actions.hideChannelDialog,
   addChannel: actions.addChannel,
   editChannel: actions.editChannel,
+  removeChannel: actions.removeChannel,
 };
 
+@connect(mapStateToProps, actionCreators)
 @reduxForm({
   form: 'channelForm',
+  enableReinitialize: true,
 })
-@connect(mapStateToProps, actionCreators)
 class ChannelDialog extends React.Component {
   mapVariantToData = {
     add: {
@@ -27,8 +29,9 @@ class ChannelDialog extends React.Component {
       body: <Field name="channelName" component="input" type="text" className="form-control" placeholder="Enter channel name" required />,
       titleSubmitButton: 'Add',
       handleSubmit: async ({ channelName }) => {
-        const { addChannel } = this.props;
+        const { addChannel, reset } = this.props;
         await addChannel({ channelName });
+        reset();
       },
     },
     edit: {
@@ -36,14 +39,20 @@ class ChannelDialog extends React.Component {
       body: <Field name="channelName" component="input" type="text" className="form-control" placeholder="Enter channel name" required />,
       titleSubmitButton: 'Edit',
       handleSubmit: async ({ channelName }) => {
-        const { editChannel, channelDialog: { channelId } } = this.props;
+        const { editChannel, reset, channelId } = this.props;
         await editChannel({ channelName, channelId });
+        reset();
       },
     },
     remove: {
       title: 'Remove Channel',
       body: 'Are you sure you want to delete the channel?',
       titleSubmitButton: 'Yes',
+      handleSubmit: async () => {
+        const { removeChannel, reset, channelId } = this.props;
+        await removeChannel({ channelId });
+        reset();
+      },
     },
   }
 
@@ -53,15 +62,9 @@ class ChannelDialog extends React.Component {
     reset();
   }
 
-  handleSubmitAddChannel = async ({ channelName }) => {
-    const { addChannel, reset } = this.props;
-    await addChannel({ channelName });
-    reset();
-  }
-
   render() {
     const {
-      submitting, error, handleSubmit, channelDialog: { variant, show },
+      submitting, error, handleSubmit, variant, show,
     } = this.props;
     if (!variant) {
       return null;
@@ -70,7 +73,7 @@ class ChannelDialog extends React.Component {
 
     return (
       <Modal centered show={show} onHide={this.handleHideChannelDialog}>
-        <Form onSubmit={handleSubmit(this.handleSubmitAddChannel)}>
+        <Form onSubmit={handleSubmit(data.handleSubmit)}>
           <Modal.Header closeButton>
             <Modal.Title>{data.title}</Modal.Title>
           </Modal.Header>

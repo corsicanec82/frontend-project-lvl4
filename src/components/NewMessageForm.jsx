@@ -15,10 +15,10 @@ const actionCreators = {
   addMessage: actions.addMessage,
 };
 
+@connect(mapStateToProps, actionCreators)
 @reduxForm({
   form: 'newMessage',
 })
-@connect(mapStateToProps, actionCreators)
 class NewMessageForm extends React.Component {
   static contextType = UserData;
 

@@ -28,5 +28,16 @@ export const editChannel = ({ channelName, channelId }) => async () => {
   }
 };
 
+export const removeChannelSuccess = createAction('CHANNEL_REMOVE');
+
+export const removeChannel = ({ channelId }) => async () => {
+  try {
+    const url = routes.channelPath(channelId);
+    await axios.delete(url);
+  } catch (e) {
+    throw new SubmissionError({ _error: e.message });
+  }
+};
+
 export const showChannelDialog = createAction('CHANNEL_DIALOG_SHOW');
 export const hideChannelDialog = createAction('CHANNEL_DIALOG_HIDE');
