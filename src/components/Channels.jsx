@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
 
 const actionCreators = {
   showChannelDialog: actions.showChannelDialog,
+  switchChannel: actions.switchChannel,
 };
 
 @connect(mapStateToProps, actionCreators)
@@ -28,6 +29,12 @@ class Channels extends React.Component {
     showChannelDialog({ variant, channel });
   }
 
+  handleSwitchChannel = channelId => (e) => {
+    e.preventDefault();
+    const { switchChannel } = this.props;
+    switchChannel({ channelId });
+  }
+
   renderChannel = (channel) => {
     const { id, name, removable } = channel;
     const { currentChannelId } = this.props;
@@ -36,7 +43,7 @@ class Channels extends React.Component {
       <Nav.Item key={id} className="px-2 py-1">
         <Row className="m-0">
           <Col className="p-0">
-            <Nav.Link href={`#${name}`} className="p-0" disabled={id === currentChannelId}>{`# ${name}`}</Nav.Link>
+            <Nav.Link href={`#${name}`} className="p-0" disabled={id === currentChannelId} onClick={this.handleSwitchChannel(id)}>{`# ${name}`}</Nav.Link>
           </Col>
           {removable && (
             <Col md="auto" className="p-0">

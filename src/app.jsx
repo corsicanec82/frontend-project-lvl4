@@ -18,7 +18,11 @@ export default (gon) => {
   const { channels, currentChannelId, messages } = gon;
 
   const initialState = {
-    channels: { ...getStateFromData(channels), currentChannelId },
+    channels: {
+      ...getStateFromData(channels),
+      currentChannelId,
+      defaultChannelId: currentChannelId,
+    },
     messages: getStateFromData(messages),
   };
 

@@ -41,3 +41,5 @@ export const removeChannel = ({ channelId }) => async () => {
 
 export const showChannelDialog = createAction('CHANNEL_DIALOG_SHOW');
 export const hideChannelDialog = createAction('CHANNEL_DIALOG_HIDE');
+
+export const switchChannel = createAction('CHANNEL_SWITCH');

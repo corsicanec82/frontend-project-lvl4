@@ -5,30 +5,46 @@ import * as actions from '../actions';
 
 export const channels = handleActions({
   [actions.addChannelSuccess](state, { payload: { data: { id, attributes } } }) {
-    const { byId, allIds, currentChannelId } = state;
+    const { byId, allIds } = state;
     return {
+      ...state,
       byId: { ...byId, [id]: attributes },
       allIds: [...allIds, id],
-      currentChannelId,
     };
   },
   [actions.editChannelSuccess](state, { payload: { data: { id, attributes } } }) {
-    const { byId, allIds, currentChannelId } = state;
+    const { byId } = state;
     return {
+      ...state,
       byId: { ...byId, [id]: attributes },
-      allIds,
-      currentChannelId,
     };
   },
   [actions.removeChannelSuccess](state, { payload: { data: { id } } }) {
-    const { byId, allIds, currentChannelId } = state;
+    const {
+      byId,
+      allIds,
+      currentChannelId,
+      defaultChannelId,
+    } = state;
     return {
+      ...state,
       byId: _omit(byId, id),
       allIds: allIds.filter(i => i !== id),
-      currentChannelId,
+      currentChannelId: currentChannelId === id && defaultChannelId,
     };
   },
-}, { byId: {}, allIds: [], currentChannelId: null });
+  [actions.switchChannel](state, { payload: { channelId } }) {
+    return {
+      ...state,
+      currentChannelId: channelId,
+    };
+  },
+}, {
+  byId: {},
+  allIds: [],
+  currentChannelId: null,
+  defaultChannelId: null,
+});
 
 export const channelsUIState = handleActions({
   [actions.showChannelDialog](state, { payload: { variant, channel } }) {
