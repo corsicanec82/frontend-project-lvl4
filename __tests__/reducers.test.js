@@ -28,7 +28,7 @@ describe('reducer messages', () => {
     expect(messages(undefined, actions.addMessageSuccess({ data }))).toEqual(expected);
   });
 
-  it ('should handle CHANNEL_REMOVE', () => {
+  it('should handle CHANNEL_REMOVE', () => {
     const time = Date.now();
     const messagesFromChannel1 = new Array(3).fill(null).map((el, i) => ({
       id: i + 1,
@@ -98,7 +98,7 @@ describe('reducer channels', () => {
         ...acc,
         byId: { ...byId, [id]: attributes },
         allIds: [...allIds, id],
-      }
+      };
     }, {
       byId: {},
       allIds: [],
@@ -110,7 +110,7 @@ describe('reducer channels', () => {
     expect(state).toEqual(expected);
   });
 
-  it ('should handle CHANNEL_EDIT', () => {
+  it('should handle CHANNEL_EDIT', () => {
     const testChannel = {
       id: 3,
       attributes: {
