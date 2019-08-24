@@ -1,4 +1,6 @@
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -28,7 +30,20 @@ module.exports = {
       },
     ],
   },
-  // plugins: [
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        faker: {
+          test: /[\\/]node_modules[\\/](faker)[\\/]/,
+          name: 'faker',
+          chunks: 'all',
+        },
+      },
+    },
+    minimizer: [new UglifyJsPlugin()],
+  },
+  plugins: [
+    new CompressionPlugin(),
   //   new BundleAnalyzerPlugin(),
-  // ],
+  ],
 };
