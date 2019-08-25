@@ -1,4 +1,5 @@
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -28,6 +29,22 @@ module.exports = {
       },
     ],
   },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       faker: {
+  //         test: /[\\/]node_modules[\\/](faker)[\\/]/,
+  //         name: 'faker',
+  //         chunks: 'all',
+  //       },
+  //       react: {
+  //         test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+  //         name: 'react',
+  //         chunks: 'all',
+  //       },
+  //     },
+  //   },
+  // },
   // plugins: [
   //   new BundleAnalyzerPlugin(),
   // ],
