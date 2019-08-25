@@ -1,14 +1,21 @@
 import * as actions from '../src/actions';
 
 describe('actions', () => {
+  const channel = {
+    id: 3,
+    removable: true,
+    name: 'channelName',
+  };
+  const message = {
+    id: 2,
+    time: Date.now(),
+    channelId: 1,
+  };
+
   it('should create an action MESSAGE_ADD', () => {
     const data = {
-      id: 2,
-      attributes: {
-        id: 2,
-        time: Date.now(),
-        channelId: 1,
-      },
+      id: message.id,
+      attributes: message,
     };
     const expected = {
       type: 'MESSAGE_ADD',
@@ -19,12 +26,8 @@ describe('actions', () => {
 
   it('should create an action CHANNEL_ADD', () => {
     const data = {
-      id: 3,
-      attributes: {
-        id: 3,
-        removable: true,
-        name: 'channelName',
-      },
+      id: channel.id,
+      attributes: channel,
     };
     const expected = {
       type: 'CHANNEL_ADD',
@@ -35,12 +38,8 @@ describe('actions', () => {
 
   it('should create an action CHANNEL_EDIT', () => {
     const data = {
-      id: 3,
-      attributes: {
-        id: 3,
-        removable: true,
-        name: 'channelName',
-      },
+      id: channel.id,
+      attributes: channel,
     };
     const expected = {
       type: 'CHANNEL_EDIT',
@@ -51,7 +50,7 @@ describe('actions', () => {
 
   it('should create an action CHANNEL_REMOVE', () => {
     const data = {
-      id: 3,
+      id: channel.id,
     };
     const expected = {
       type: 'CHANNEL_REMOVE',

@@ -46,6 +46,11 @@ export const channels = handleActions({
   defaultChannelId: null,
 });
 
+const hideChannelDialog = (state) => {
+  const { channelDialog } = state;
+  return { ...state, channelDialog: { ...channelDialog, show: false } };
+};
+
 export const channelsUIState = handleActions({
   [actions.showChannelDialog](state, { payload: { variant, channel } }) {
     const channelDialog = {
@@ -58,20 +63,8 @@ export const channelsUIState = handleActions({
     };
     return { ...state, channelDialog };
   },
-  [actions.hideChannelDialog](state) {
-    const { channelDialog } = state;
-    return { ...state, channelDialog: { ...channelDialog, show: false } };
-  },
-  [actions.addChannelSuccess](state) {
-    const { channelDialog } = state;
-    return { ...state, channelDialog: { ...channelDialog, show: false } };
-  },
-  [actions.editChannelSuccess](state) {
-    const { channelDialog } = state;
-    return { ...state, channelDialog: { ...channelDialog, show: false } };
-  },
-  [actions.removeChannelSuccess](state) {
-    const { channelDialog } = state;
-    return { ...state, channelDialog: { ...channelDialog, show: false } };
-  },
+  [actions.hideChannelDialog]: hideChannelDialog,
+  [actions.addChannelSuccess]: hideChannelDialog,
+  [actions.editChannelSuccess]: hideChannelDialog,
+  [actions.removeChannelSuccess]: hideChannelDialog,
 }, { channelDialog: { initialValues: {} } });
