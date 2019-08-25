@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+
 import * as actions from '../src/actions';
 
 describe('actions', () => {
@@ -57,5 +59,21 @@ describe('actions', () => {
       payload: { data },
     };
     expect(actions.removeChannelSuccess({ data })).toEqual(expected);
+  });
+
+  it('should create an action addMessage', async () => {
+    const data = {
+      messageText: 'text',
+      currentChannelId: 1,
+      userData: {
+        userName: 'userName',
+        avatarUrl: 'avatarUrl',
+      },
+    };
+    try {
+      await actions.addMessage(data)();
+    } catch (e) {
+      expect(e.message).toMatch('Submit Validation Failed');
+    }
   });
 });
