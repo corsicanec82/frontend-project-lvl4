@@ -30,7 +30,7 @@ export const channels = handleActions({
       ...state,
       byId: _omit(byId, id),
       allIds: allIds.filter(i => i !== id),
-      currentChannelId: currentChannelId === id && defaultChannelId,
+      currentChannelId: currentChannelId === id ? defaultChannelId : currentChannelId,
     };
   },
   [actions.switchChannel](state, { payload: { channelId } }) {

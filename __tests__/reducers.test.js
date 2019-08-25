@@ -1,5 +1,7 @@
+import _cloneDeep from 'lodash/cloneDeep';
+
 import messages from '../src/reducers/messages';
-import { channels } from '../src/reducers/channels';
+import { channels, channelsUIState } from '../src/reducers/channels';
 import * as actions from '../src/actions';
 
 describe('reducer messages', () => {
@@ -123,6 +125,71 @@ describe('reducer channels', () => {
     const expected = channels(state, actions.addChannelSuccess({ data: testChannelExpected }));
     state = channels(state, actions.addChannelSuccess({ data: testChannel }));
     state = channels(state, actions.editChannelSuccess({ data: testChannelExpected }));
+    expect(state).toEqual(expected);
+  });
+
+  it('should handle CHANNEL_REMOVE', () => {
+    const channel4 = {
+      id: 4,
+      attributes: {
+        id: 4,
+        name: 'channel4',
+        removable: true,
+      },
+    };
+    const data = {
+      id: 4,
+    };
+    const expected = _cloneDeep(state);
+    state = channels(state, actions.addChannelSuccess({ data: channel4 }));
+    state = channels(state, actions.removeChannelSuccess({ data }));
+    expect(state).toEqual(expected);
+  });
+
+  it('should handle CHANNEL_SWITCH', () => {
+    const channelId = 3;
+    const expected = { ...state, currentChannelId: 3 };
+    state = channels(state, actions.switchChannel({ channelId }));
+    expect(state).toEqual(expected);
+  });
+});
+
+describe('reducer channelsUIState', () => {
+  let state;
+
+  it('should return the initial state channelsUIState', () => {
+    state = channelsUIState(undefined, {});
+    expect(state).toEqual({
+      channelDialog: {
+        initialValues: {},
+      },
+    });
+  });
+
+  it('should handle CHANNEL_DIALOG_SHOW', () => {
+    const channel = {
+      id: 3,
+      name: 'name',
+      removable: true,
+    };
+    const expected = {
+      channelDialog: {
+        variant: 'edit',
+        show: true,
+        channelId: 3,
+        initialValues: {
+          channelName: 'name',
+        },
+      },
+    };
+    state = channelsUIState(state, actions.showChannelDialog({ variant: 'edit', channel }));
+    expect(state).toEqual(expected);
+  });
+
+  it('should handle CHANNEL_DIALOG_HIDE', () => {
+    const { channelDialog } = state;
+    const expected = { ...state, channelDialog: { ...channelDialog, show: false } };
+    state = channelsUIState(state, actions.hideChannelDialog());
     expect(state).toEqual(expected);
   });
 });
