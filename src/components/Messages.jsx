@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { ListGroup, Media, Image } from 'react-bootstrap';
 
+import connect from '../connect';
 import { getMessagesFromChannel } from '../selectors';
 
 const mapStateToProps = state => ({

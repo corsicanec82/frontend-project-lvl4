@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Navbar } from 'react-bootstrap';
 
+import connect from '../connect';
 import { getCurrentChannel } from '../selectors';
 
 const mapStateToProps = state => ({

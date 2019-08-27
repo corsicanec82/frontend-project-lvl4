@@ -1,23 +1,15 @@
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 
-import * as actions from '../actions';
+import connect from '../connect';
 
 const mapStateToProps = (state) => {
   const { channelDialog } = state.channelsUIState;
   return channelDialog;
 };
 
-const actionCreators = {
-  hideChannelDialog: actions.hideChannelDialog,
-  addChannel: actions.addChannel,
-  editChannel: actions.editChannel,
-  removeChannel: actions.removeChannel,
-};
-
-@connect(mapStateToProps, actionCreators)
+@connect(mapStateToProps)
 @reduxForm({
   form: 'channelForm',
   enableReinitialize: true,
@@ -30,7 +22,11 @@ class ChannelDialog extends React.Component {
       titleSubmitButton: 'Add',
       handleSubmit: async ({ channelName }) => {
         const { addChannel, reset } = this.props;
-        await addChannel({ channelName });
+        try {
+          await addChannel({ channelName });
+        } catch (e) {
+          throw new SubmissionError({ _error: e.message });
+        }
         reset();
       },
     },
@@ -40,7 +36,11 @@ class ChannelDialog extends React.Component {
       titleSubmitButton: 'Edit',
       handleSubmit: async ({ channelName }) => {
         const { editChannel, reset, channelId } = this.props;
-        await editChannel({ channelName, channelId });
+        try {
+          await editChannel({ channelName, channelId });
+        } catch (e) {
+          throw new SubmissionError({ _error: e.message });
+        }
         reset();
       },
     },
@@ -50,7 +50,11 @@ class ChannelDialog extends React.Component {
       titleSubmitButton: 'Yes',
       handleSubmit: async () => {
         const { removeChannel, reset, channelId } = this.props;
-        await removeChannel({ channelId });
+        try {
+          await removeChannel({ channelId });
+        } catch (e) {
+          throw new SubmissionError({ _error: e.message });
+        }
         reset();
       },
     },

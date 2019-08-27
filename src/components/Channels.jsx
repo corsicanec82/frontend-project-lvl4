@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   Button, Image, Nav, Col, Row,
 } from 'react-bootstrap';
@@ -7,7 +6,7 @@ import Octicon, { Pencil, X } from '@primer/octicons-react';
 
 import { getSortedChannels, getCurrentChannelId } from '../selectors';
 import UserData from './UserData';
-import * as actions from '../actions';
+import connect from '../connect';
 import ChannelDialog from './ChannelDialog';
 
 const mapStateToProps = state => ({
@@ -15,12 +14,7 @@ const mapStateToProps = state => ({
   currentChannelId: getCurrentChannelId(state),
 });
 
-const actionCreators = {
-  showChannelDialog: actions.showChannelDialog,
-  switchChannel: actions.switchChannel,
-};
-
-@connect(mapStateToProps, actionCreators)
+@connect(mapStateToProps)
 class Channels extends React.Component {
   static contextType = UserData;
 

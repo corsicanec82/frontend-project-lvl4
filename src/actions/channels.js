@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import { SubmissionError } from 'redux-form';
 import axios from 'axios';
 
 import routes from '../routes';
@@ -12,7 +11,7 @@ export const addChannel = ({ channelName }) => async () => {
     const data = { attributes: { name: channelName } };
     await axios.post(url, { data });
   } catch (e) {
-    throw new SubmissionError({ _error: e.message });
+    throw e;
   }
 };
 
@@ -24,7 +23,7 @@ export const editChannel = ({ channelName, channelId }) => async () => {
     const data = { attributes: { name: channelName } };
     await axios.patch(url, { data });
   } catch (e) {
-    throw new SubmissionError({ _error: e.message });
+    throw e;
   }
 };
 
@@ -35,7 +34,7 @@ export const removeChannel = ({ channelId }) => async () => {
     const url = routes.channelPath(channelId);
     await axios.delete(url);
   } catch (e) {
-    throw new SubmissionError({ _error: e.message });
+    throw e;
   }
 };
 

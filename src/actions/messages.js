@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import { SubmissionError } from 'redux-form';
 import axios from 'axios';
 
 import routes from '../routes';
@@ -12,6 +11,6 @@ export const addMessage = ({ messageText, currentChannelId, userData }) => async
     const data = { attributes: { text: messageText, userData } };
     await axios.post(url, { data });
   } catch (e) {
-    throw new SubmissionError({ _error: e.message });
+    throw e;
   }
 };
