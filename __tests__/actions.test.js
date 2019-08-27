@@ -73,7 +73,7 @@ describe('actions', () => {
     try {
       await actions.addMessage(data)();
     } catch (e) {
-      expect(e.message).toMatch('Submit Validation Failed');
+      expect(e.message).toMatch('connect ECONNREFUSED');
     }
   });
 });
