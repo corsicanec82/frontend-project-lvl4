@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
-import { Form, Col, Button } from 'react-bootstrap';
+import {
+  Form, Col, Button, Alert,
+} from 'react-bootstrap';
 
 import connect from '../connect';
 import UserData from './UserData';
@@ -34,14 +36,14 @@ class NewMessageForm extends React.Component {
     } = this.props;
 
     return (
-      <div className="bg-light pl-3 py-3">
-        {error && <div className="mb-3 pr-2 text-danger">{error}</div>}
+      <div className="bg-light px-3 py-3">
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit(this.handleAddMessage)}>
-          <Form.Row className="w-100">
-            <Col>
+          <Form.Row className="w-100 mx-0">
+            <Col className="pl-0 pr-2">
               <Field name="messageText" component="input" type="text" className="form-control" placeholder="Message" />
             </Col>
-            <Col md="auto">
+            <Col md="auto" className="px-0">
               <Button variant="primary" type="submit" disabled={pristine || submitting}>Send</Button>
             </Col>
           </Form.Row>

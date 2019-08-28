@@ -1,5 +1,7 @@
 import React from 'react';
-import { ListGroup, Media, Image } from 'react-bootstrap';
+import {
+  ListGroup, Image, Row, Col,
+} from 'react-bootstrap';
 
 import connect from '../connect';
 import { getMessagesFromChannel } from '../selectors';
@@ -46,16 +48,18 @@ class Messages extends React.Component {
 
     return (
       <ListGroup.Item as="li" key={id} className="px-0">
-        <Media>
-          <Image src={avatarUrl} rounded className="mr-3" width="60" />
-          <Media.Body>
+        <Row>
+          <Col md="auto">
+            <Image src={avatarUrl} rounded width="60" />
+          </Col>
+          <Col className="pl-0">
             <p className="mb-1">
               <span className="mr-2 font-weight-bold">{userName}</span>
               <small>{time}</small>
             </p>
             {text}
-          </Media.Body>
-        </Media>
+          </Col>
+        </Row>
       </ListGroup.Item>
     );
   }

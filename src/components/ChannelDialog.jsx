@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import {
+  Button, Modal, Form, Alert,
+} from 'react-bootstrap';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 
 import connect from '../connect';
@@ -82,7 +84,7 @@ class ChannelDialog extends React.Component {
             <Modal.Title>{data.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {error && <div className="mb-3 text-danger">{error}</div>}
+            {error && <Alert variant="danger">{error}</Alert>}
             {data.body}
           </Modal.Body>
           <Modal.Footer>
