@@ -7,15 +7,13 @@ export const getFakeUserData = () => ({
   avatarUrl: faker.internet.avatar(),
 });
 
-export const setUserData = () => {
-  const userDataFromCookies = Cookies.get('userData');
-  const userData = userDataFromCookies || JSON.stringify(getFakeUserData());
-  Cookies.set('userData', userData, { expires: 1 });
+export const getUserData = () => {
+  const userDataJSON = Cookies.get('userData') || JSON.stringify(getFakeUserData());
+  return JSON.parse(userDataJSON);
 };
 
-export const getUserData = () => {
-  setUserData();
-  return JSON.parse(Cookies.get('userData'));
+export const setUserData = (userData) => {
+  Cookies.set('userData', userData, { expires: 1 });
 };
 
 export const getStateFromData = (data) => {

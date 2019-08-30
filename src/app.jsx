@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 import reducers from './reducers';
 import App from './components/App';
 import UserData from './components/UserData';
-import { getUserData, getStateFromData } from './utils';
+import { getUserData, setUserData, getStateFromData } from './utils';
 import {
   addMessageSuccess, addChannelSuccess, editChannelSuccess, removeChannelSuccess,
 } from './actions';
@@ -50,9 +50,12 @@ export default (gon) => {
     store.dispatch(removeChannelSuccess(data));
   });
 
+  const userData = getUserData();
+  setUserData(userData);
+
   render(
     <Provider store={store}>
-      <UserData.Provider value={getUserData()}>
+      <UserData.Provider value={userData}>
         <App />
       </UserData.Provider>
     </Provider>,
