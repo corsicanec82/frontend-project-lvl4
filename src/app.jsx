@@ -36,7 +36,9 @@ export default (gon) => {
     ),
   );
 
-  const socket = io();
+  const socket = io({
+    transports: ['websocket'],
+  });
   socket.on('newMessage', (data) => {
     store.dispatch(addMessageSuccess(data));
   });
